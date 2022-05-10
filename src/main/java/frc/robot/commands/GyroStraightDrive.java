@@ -40,7 +40,7 @@ public class GyroStraightDrive extends CommandBase {
   public void initialize() {
     angle = gyro.getAngleZ();
     gain = 0;
-    slowDownRange = 0;
+    slowDownRange = 3;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
