@@ -41,6 +41,7 @@ public class RobotContainer {
   private final JoystickButton cButton = new JoystickButton(Constants.KEYBOARD, 3);
   private final JoystickButton vButton = new JoystickButton(Constants.KEYBOARD, 4);
   private final JoystickButton aButton = new JoystickButton(Constants.JOYSTICK, 1);
+  //TESTING
 
   // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> chooser = new SendableChooser<>();
