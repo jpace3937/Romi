@@ -20,6 +20,9 @@ public final class Main {
    * <p>If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
+    System.out.println("This will output some text!");
+    System.out.println("This will output some text with a line break!");
+    System.out.println("This will also output some text with a line break!");
     RobotBase.startRobot(Robot::new);
   }
 }
