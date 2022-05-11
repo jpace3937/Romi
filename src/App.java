@@ -7,6 +7,7 @@ public class App {
         int secondNumber = input.nextInt();
         int product = multiply(firstNumber, secondNumber);
         System.out.println(product);
+        input.close();
     }
     public static void welcome(){
         System.out.println("Welcome to calculator!");
