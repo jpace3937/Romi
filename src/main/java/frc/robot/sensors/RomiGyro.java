@@ -9,29 +9,29 @@ import edu.wpi.first.hal.SimDevice.Direction;
 import edu.wpi.first.hal.SimDouble;
 
 public class RomiGyro {
-  private SimDouble simRateX;
-  private SimDouble simRateY;
-  private SimDouble simRateZ;
-  private SimDouble simAngleX;
-  private SimDouble simAngleY;
-  private SimDouble simAngleZ;
+  private SimDouble m_simRateX;
+  private SimDouble m_simRateY;
+  private SimDouble m_simRateZ;
+  private SimDouble m_simAngleX;
+  private SimDouble m_simAngleY;
+  private SimDouble m_simAngleZ;
 
-  private double angleXOffset;
-  private double angleYOffset;
-  private double angleZOffset;
+  private double m_angleXOffset;
+  private double m_angleYOffset;
+  private double m_angleZOffset;
 
   /** Create a new RomiGyro. */
   public RomiGyro() {
     SimDevice gyroSimDevice = SimDevice.create("Gyro:RomiGyro");
     if (gyroSimDevice != null) {
       gyroSimDevice.createBoolean("init", Direction.kOutput, true);
-      simRateX = gyroSimDevice.createDouble("rate_x", Direction.kInput, 0.0);
-      simRateY = gyroSimDevice.createDouble("rate_y", Direction.kInput, 0.0);
-      simRateZ = gyroSimDevice.createDouble("rate_z", Direction.kInput, 0.0);
+      m_simRateX = gyroSimDevice.createDouble("rate_x", Direction.kInput, 0.0);
+      m_simRateY = gyroSimDevice.createDouble("rate_y", Direction.kInput, 0.0);
+      m_simRateZ = gyroSimDevice.createDouble("rate_z", Direction.kInput, 0.0);
 
-      simAngleX = gyroSimDevice.createDouble("angle_x", Direction.kInput, 0.0);
-      simAngleY = gyroSimDevice.createDouble("angle_y", Direction.kInput, 0.0);
-      simAngleZ = gyroSimDevice.createDouble("angle_z", Direction.kInput, 0.0);
+      m_simAngleX = gyroSimDevice.createDouble("angle_x", Direction.kInput, 0.0);
+      m_simAngleY = gyroSimDevice.createDouble("angle_y", Direction.kInput, 0.0);
+      m_simAngleZ = gyroSimDevice.createDouble("angle_z", Direction.kInput, 0.0);
     }
   }
 
@@ -41,8 +41,8 @@ public class RomiGyro {
    * @return rate of turn in degrees-per-second
    */
   public double getRateX() {
-    if (simRateX != null) {
-      return simRateX.get();
+    if (m_simRateX != null) {
+      return m_simRateX.get();
     }
 
     return 0.0;
@@ -54,8 +54,8 @@ public class RomiGyro {
    * @return rate of turn in degrees-per-second
    */
   public double getRateY() {
-    if (simRateY != null) {
-      return simRateY.get();
+    if (m_simRateY != null) {
+      return m_simRateY.get();
     }
 
     return 0.0;
@@ -67,8 +67,8 @@ public class RomiGyro {
    * @return rate of turn in degrees-per-second
    */
   public double getRateZ() {
-    if (simRateZ != null) {
-      return simRateZ.get();
+    if (m_simRateZ != null) {
+      return m_simRateZ.get();
     }
 
     return 0.0;
@@ -80,8 +80,8 @@ public class RomiGyro {
    * @return current angle around X-axis in degrees
    */
   public double getAngleX() {
-    if (simAngleX != null) {
-      return simAngleX.get() - angleXOffset;
+    if (m_simAngleX != null) {
+      return m_simAngleX.get() - m_angleXOffset;
     }
 
     return 0.0;
@@ -93,8 +93,8 @@ public class RomiGyro {
    * @return current angle around Y-axis in degrees
    */
   public double getAngleY() {
-    if (simAngleY != null) {
-      return simAngleY.get() - angleYOffset;
+    if (m_simAngleY != null) {
+      return m_simAngleY.get() - m_angleYOffset;
     }
 
     return 0.0;
@@ -106,8 +106,8 @@ public class RomiGyro {
    * @return current angle around Z-axis in degrees
    */
   public double getAngleZ() {
-    if (simAngleZ != null) {
-      return simAngleZ.get() - angleZOffset;
+    if (m_simAngleZ != null) {
+      return m_simAngleZ.get() - m_angleZOffset;
     }
 
     return 0.0;
@@ -115,10 +115,10 @@ public class RomiGyro {
 
   /** Reset the gyro angles to 0. */
   public void reset() {
-    if (simAngleX != null) {
-      angleXOffset = simAngleX.get();
-      angleYOffset = simAngleY.get();
-      angleZOffset = simAngleZ.get();
+    if (m_simAngleX != null) {
+      m_angleXOffset = m_simAngleX.get();
+      m_angleYOffset = m_simAngleY.get();
+      m_angleZOffset = m_simAngleZ.get();
     }
   }
 }

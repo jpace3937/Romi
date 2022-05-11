@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.Supplier;
 
 public class ArcadeDrive extends CommandBase {
-  private final Drivetrain s_Drivetrain;
-  private final Supplier<Double> xAxisSpeedSupplier;
-  private final Supplier<Double> zAxisRotateSupplier;
+  private final Drivetrain m_drivetrain;
+  private final Supplier<Double> m_xaxisSpeedSupplier;
+  private final Supplier<Double> m_zaxisRotateSupplier;
 
   /**
    * Creates a new ArcadeDrive. This command will drive your robot according to the speed supplier
@@ -25,10 +25,10 @@ public class ArcadeDrive extends CommandBase {
       Drivetrain drivetrain,
       Supplier<Double> xaxisSpeedSupplier,
       Supplier<Double> zaxisRotateSupplier) {
-    s_Drivetrain = drivetrain;
-    xAxisSpeedSupplier = xaxisSpeedSupplier;
-    zAxisRotateSupplier = zaxisRotateSupplier;
-    addRequirements(s_Drivetrain);
+    m_drivetrain = drivetrain;
+    m_xaxisSpeedSupplier = xaxisSpeedSupplier;
+    m_zaxisRotateSupplier = zaxisRotateSupplier;
+    addRequirements(drivetrain);
   }
 
   // Called when the command is initially scheduled.
@@ -38,7 +38,7 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_Drivetrain.arcadeDrive(xAxisSpeedSupplier.get(), zAxisRotateSupplier.get());
+    m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get());
   }
 
   // Called once the command ends or is interrupted.
