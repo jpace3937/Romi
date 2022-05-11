@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.Robot;
 import frc.robot.sensors.RomiGyro;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,67 +17,59 @@ public class Drivetrain extends SubsystemBase {
 
   // The Romi has the left and right motors set to
   // PWM channels 0 and 1 respectively
-  private final Spark leftMotor = new Spark(0);
-  private final Spark rightMotor = new Spark(1);
+  private final Spark m_leftMotor = new Spark(0);
+  private final Spark m_rightMotor = new Spark(1);
 
   // The Romi has onboard encoders that are hardcoded
   // to use DIO pins 4/5 and 6/7 for the left and right
-  private final Encoder leftEncoder = new Encoder(4, 5);
-  private final Encoder rightEncoder = new Encoder(6, 7);
+  private final Encoder m_leftEncoder = new Encoder(4, 5);
+  private final Encoder m_rightEncoder = new Encoder(6, 7);
 
   // Set up the differential drive controller
-  private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotor, rightMotor);
+  private final DifferentialDrive m_diffDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
 
   // Set up the RomiGyro
-  public final RomiGyro gyro = Robot.gyro;
+  private final RomiGyro m_gyro = new RomiGyro();
 
   // Set up the BuiltInAccelerometer
-  private final BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
+  private final BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer();
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
-    rightMotor.setInverted(true);
+    m_rightMotor.setInverted(true);
 
     // Use inches as unit for encoder distances
-    leftEncoder.setDistancePerPulse((Math.PI * kWheelDiameterInch) / kCountsPerRevolution);
-    rightEncoder.setDistancePerPulse((Math.PI * kWheelDiameterInch) / kCountsPerRevolution);
+    m_leftEncoder.setDistancePerPulse((Math.PI * kWheelDiameterInch) / kCountsPerRevolution);
+    m_rightEncoder.setDistancePerPulse((Math.PI * kWheelDiameterInch) / kCountsPerRevolution);
     resetEncoders();
   }
 
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
-    diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
-  }
-  
-  public void arcadeDriveCutPower(double xaxisSpeed, double zaxisRotate, boolean cutPower) {
-    if(cutPower){
-      xaxisSpeed *= 0.4;
-      zaxisRotate *= 0.4;
-    }
-    diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
+    m_diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
   }
 
   public void resetEncoders() {
-    leftEncoder.reset();
-    rightEncoder.reset();
+    m_leftEncoder.reset();
+    m_rightEncoder.reset();
   }
 
   public int getLeftEncoderCount() {
-    return leftEncoder.get();
+    return m_leftEncoder.get();
   }
 
   public int getRightEncoderCount() {
-    return rightEncoder.get();
+    return m_rightEncoder.get();
   }
 
   public double getLeftDistanceInch() {
-    return leftEncoder.getDistance();
+    return m_leftEncoder.getDistance();
   }
 
   public double getRightDistanceInch() {
-    return rightEncoder.getDistance();
+    return m_rightEncoder.getDistance();
   }
 
   public double getAverageDistanceInch() {
@@ -91,7 +82,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The acceleration of the Romi along the X-axis in Gs
    */
   public double getAccelX() {
-    return accelerometer.getX();
+    return m_accelerometer.getX();
   }
 
   /**
@@ -100,7 +91,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The acceleration of the Romi along the Y-axis in Gs
    */
   public double getAccelY() {
-    return accelerometer.getY();
+    return m_accelerometer.getY();
   }
 
   /**
@@ -109,7 +100,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The acceleration of the Romi along the Z-axis in Gs
    */
   public double getAccelZ() {
-    return accelerometer.getZ();
+    return m_accelerometer.getZ();
   }
 
   /**
@@ -118,7 +109,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The current angle of the Romi in degrees
    */
   public double getGyroAngleX() {
-    return gyro.getAngleX();
+    return m_gyro.getAngleX();
   }
 
   /**
@@ -127,7 +118,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The current angle of the Romi in degrees
    */
   public double getGyroAngleY() {
-    return gyro.getAngleY();
+    return m_gyro.getAngleY();
   }
 
   /**
@@ -136,12 +127,12 @@ public class Drivetrain extends SubsystemBase {
    * @return The current angle of the Romi in degrees
    */
   public double getGyroAngleZ() {
-    return gyro.getAngleZ();
+    return m_gyro.getAngleZ();
   }
 
   /** Reset the gyro. */
   public void resetGyro() {
-    gyro.reset();
+    m_gyro.reset();
   }
 
   @Override
