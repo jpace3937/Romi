@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.Joystick;
 public final class Constants {
     public static final GenericHID JOYSTICK = new GenericHID(0);
     public static final GenericHID KEYBOARD = new GenericHID(1);
-    public static final int IS_ORIENTED_STRAIGHT_DEGREE_THRESHOLD = 5;
     public static double getJoystick(Joystick joystick){
         if(-joystick.getRawAxis(1) == -1.5259021893143654E-5){
             return 0.0;
@@ -26,9 +25,9 @@ public final class Constants {
         return -joystick.getRawAxis(1);
     }
     public static double getJoystickTurn(Joystick joystick){
-        if(-joystick.getRawAxis(4) == -1.5259021893143654E-5){
+        if(joystick.getRawAxis(4) == -1.5259021893143654E-5){
             return 0.0;
         }
-        return -joystick.getRawAxis(4);
+        return joystick.getRawAxis(4);
     }
 }

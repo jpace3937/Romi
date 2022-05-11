@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
 import frc.robot.commands.GyroStraightDrive;
@@ -31,7 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain s_Drivetrain = new Drivetrain();
-  private final OnBoardIO onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.OUTPUT, s_Drivetrain);
+  private final OnBoardIO onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.OUTPUT);
 
   // Assumes a gamepad plugged into channnel 0
   private final Joystick xboxController = new Joystick(0);
@@ -40,16 +39,14 @@ public class RobotContainer {
   private final JoystickButton xButton = new JoystickButton(Constants.KEYBOARD, 2);
   private final JoystickButton cButton = new JoystickButton(Constants.KEYBOARD, 3);
   private final JoystickButton vButton = new JoystickButton(Constants.KEYBOARD, 4);
-  private final JoystickButton aButton = new JoystickButton(Constants.JOYSTICK, 1);
 
   // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> chooser = new SendableChooser<>();
 
-  private final Command joystickDrive = getJoystickArcadeDriveCommand();
-  private final Command keyboardDrive = getKeyboardArcadeDriveCommand();
-  private final Command joystickGyroStraightDrive = getJoystickGyroStraightDriveCommand();
-  private final Command keyboardGyroStraightDrive = getKeyboardGyroStraightDriveCommand();
-  private final Command arcadeDriveJoystickCutPower = getArcadeDriveJoystickCutPowerCommand();
+  private final ArcadeDrive joystickDrive = new ArcadeDrive(s_Drivetrain, () -> -xboxController.getRawAxis(1), () -> xboxController.getRawAxis(4));
+  private final Command keyboardDrive = new ArcadeDrive(s_Drivetrain, () -> -keyboard.getRawAxis(1), () -> keyboard.getRawAxis(0));
+  private final GyroStraightDrive joystickGyroStraightDrive = new GyroStraightDrive(s_Drivetrain, xboxController);
+  private final GyroStraightDriveKeyboard keyboardGyroStraightDrive = new GyroStraightDriveKeyboard(s_Drivetrain, () -> -keyboard.getRawAxis(1), () -> keyboard.getRawAxis(0));
 
   // Example of how to use the onboard IO
   private final Button onboardButtonA = new Button(onboardIO::getButtonAPressed);
@@ -74,7 +71,7 @@ public class RobotContainer {
     chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(s_Drivetrain));
     chooser.addOption("Auto Routine Time", new AutonomousTime(s_Drivetrain));
     Shuffleboard.getTab("Chooser").add(chooser);
-    s_Drivetrain.setDefaultCommand(keyboardGyroStraightDrive);
+    s_Drivetrain.setDefaultCommand(joystickGyroStraightDrive);
   
     // Configure the button bindings
     configureButtonBindings();
@@ -87,11 +84,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    vButton.whenPressed(keyboardDrive);
+    zButton.whenPressed(joystickGyroStraightDrive);
+    xButton.whenPressed(keyboardGyroStraightDrive);
     cButton.whenPressed(joystickDrive);
-    xButton.whenPressed(joystickGyroStraightDrive);
-    zButton.whenPressed(keyboardGyroStraightDrive);
-    aButton.whenPressed(arcadeDriveJoystickCutPower);
+    vButton.whenPressed(keyboardDrive);
   }
 
   /**
@@ -101,48 +97,5 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return chooser.getSelected();
-  }
-
-  /**
-   * Use this to pass the teleop command with joysticks to the main {@link Robot} class.
-   *
-   * @return the command to run in teleop with joysticks
-   */
-  public Command getJoystickArcadeDriveCommand() {
-    return new ArcadeDrive(
-        s_Drivetrain, () -> -xboxController.getRawAxis(1), () -> xboxController.getRawAxis(4));
-  }
-  /**
-   * Use this to pass the teleop command with keyboard to the main {@link Robot} class.
-   *
-   * @return the command to run in teleop with keyboard
-   */
-  public Command getKeyboardArcadeDriveCommand() {
-    return new ArcadeDrive(
-        s_Drivetrain, () -> -keyboard.getRawAxis(1), () -> keyboard.getRawAxis(0));
-  }
-  /**
-   * Use this to pass the teleop command with joystick gyro to the main {@link Robot} class.
-   *
-   * @return the command to run in teleop with joystick gyro
-   */
-  public Command getJoystickGyroStraightDriveCommand(){
-    return new GyroStraightDrive(s_Drivetrain, xboxController);
-  }
-  /**
-   * Use this to pass the teleop command with keyboard gyro to the main {@link Robot} class.
-   *
-   * @return the command to run in teleop with keyboard gyro
-   */
-  public Command getKeyboardGyroStraightDriveCommand(){
-    return new GyroStraightDriveKeyboard(s_Drivetrain, () -> -keyboard.getRawAxis(1), () -> keyboard.getRawAxis(0));
-  }
-  /**
-   * Use this to pass the teleop command with joystick cut power to the main {@link Robot} class.
-   *
-   * @return the command to run in teleop with joystick cut power
-   */
-  public Command getArcadeDriveJoystickCutPowerCommand(){
-    return new ArcadeDriveCutPower(s_Drivetrain, () -> -xboxController.getRawAxis(1), () -> xboxController.getRawAxis(4), () -> xboxController.getRawButton(1));
   }
 }

@@ -37,7 +37,6 @@ public class OnBoardIO extends SubsystemBase {
     OUTPUT
   }
 
-  private Drivetrain s_Drivetrain;
   /**
    * Constructor.
    *
@@ -45,20 +44,6 @@ public class OnBoardIO extends SubsystemBase {
    * @param dio2 Mode for DIO 2 (input = Button C, output = red LED)
    */
   public OnBoardIO(ChannelMode dio1, ChannelMode dio2) {
-    initializeDios(dio1, dio2);
-  }
-  /**
-   * Constructor.
-   *
-   * @param dio1 Mode for DIO 1 (input = Button B, output = green LED)
-   * @param dio2 Mode for DIO 2 (input = Button C, output = red LED)
-   * @param s_Drivetrain drivetrain for io
-   */
-  public OnBoardIO(ChannelMode dio1, ChannelMode dio2, Drivetrain s_Drivetrain) {
-    this.s_Drivetrain = s_Drivetrain;
-    initializeDios(dio1, dio2);
-  }
-  private void initializeDios(ChannelMode dio1, ChannelMode dio2){
     if (dio1 == ChannelMode.INPUT) {
       buttonB = new DigitalInput(1);
     } else {
@@ -70,12 +55,6 @@ public class OnBoardIO extends SubsystemBase {
     } else {
       redLed = new DigitalOutput(2);
     }
-  }
-  public void setDriveTrain(Drivetrain s_Drivetrain){
-    this.s_Drivetrain = s_Drivetrain;
-  }
-  public Drivetrain getDrivetrain(){
-    return s_Drivetrain;
   }
 
   /** Gets if the A button is pressed. */

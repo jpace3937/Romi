@@ -30,7 +30,7 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotor, rightMotor);
 
   // Set up the RomiGyro
-  public final RomiGyro gyro = Robot.gyro;
+  private final RomiGyro gyro = Robot.gyro;
 
   // Set up the BuiltInAccelerometer
   private final BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
@@ -49,14 +49,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
-    diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
-  }
-  
-  public void arcadeDriveCutPower(double xaxisSpeed, double zaxisRotate, boolean cutPower) {
-    if(cutPower){
-      xaxisSpeed *= 0.4;
-      zaxisRotate *= 0.4;
-    }
     diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
   }
 
