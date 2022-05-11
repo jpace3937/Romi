@@ -20,6 +20,21 @@ public final class Main {
    * <p>If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
+    int numberOfWheelsOnRobot = 2;
+    double robotSpeedInchesPerSecond = 3.1;
+    
+    System.out.print("Number of wheels on the robot: ");
+    System.out.println(numberOfWheelsOnRobot);
+
+    System.out.print("The robot's current speed: ");
+    System.out.println(robotSpeedInchesPerSecond);
+
+    //The robot has stopped! Update the speed to 0 inches per second.
+    robotSpeedInchesPerSecond = 0;
+
+    System.out.print("The robot stopped! Now its new speed is: ");
+    System.out.println(robotSpeedInchesPerSecond);
+    
     RobotBase.startRobot(Robot::new);
   }
 }
