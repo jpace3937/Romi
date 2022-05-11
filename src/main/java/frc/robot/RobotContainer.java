@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
 import frc.robot.commands.GyroStraightDrive;
@@ -39,6 +40,7 @@ public class RobotContainer {
   private final JoystickButton xButton = new JoystickButton(Constants.KEYBOARD, 2);
   private final JoystickButton cButton = new JoystickButton(Constants.KEYBOARD, 3);
   private final JoystickButton vButton = new JoystickButton(Constants.KEYBOARD, 4);
+  private final JoystickButton aButton = new JoystickButton(Constants.JOYSTICK, 1);
 
   // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> chooser = new SendableChooser<>();
@@ -47,6 +49,7 @@ public class RobotContainer {
   private final Command keyboardDrive = new ArcadeDrive(s_Drivetrain, () -> -keyboard.getRawAxis(1), () -> keyboard.getRawAxis(0));
   private final GyroStraightDrive joystickGyroStraightDrive = new GyroStraightDrive(s_Drivetrain, xboxController);
   private final GyroStraightDriveKeyboard keyboardGyroStraightDrive = new GyroStraightDriveKeyboard(s_Drivetrain, () -> -keyboard.getRawAxis(1), () -> keyboard.getRawAxis(0));
+  private final ArcadeDriveCutPower joystickDriveCutPower = new ArcadeDriveCutPower(s_Drivetrain, () -> -xboxController.getRawAxis(1), () -> xboxController.getRawAxis(4), () -> xboxController.getRawButton(1));
 
   // Example of how to use the onboard IO
   private final Button onboardButtonA = new Button(onboardIO::getButtonAPressed);
@@ -88,6 +91,7 @@ public class RobotContainer {
     xButton.whenPressed(keyboardGyroStraightDrive);
     cButton.whenPressed(joystickDrive);
     vButton.whenPressed(keyboardDrive);
+    aButton.whenPressed(joystickDriveCutPower);
   }
 
   /**
