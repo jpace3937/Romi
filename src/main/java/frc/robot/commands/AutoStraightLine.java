@@ -17,7 +17,7 @@ public class AutoStraightLine extends ParallelRaceGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new WaitCommand(4),
+      new WaitCommand(3.55),
       new GyroStraightDriveAuto(s_Drivetrain, 0.7)
     );
   }
