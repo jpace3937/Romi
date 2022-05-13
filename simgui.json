@@ -23,6 +23,13 @@
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/Shuffleboard/Chooser/SendableChooser[0]": "String Chooser",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
+    },
+    "windows": {
+      "/Shuffleboard/Chooser/SendableChooser[0]": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   }
 }
