@@ -37,10 +37,10 @@ public class Turn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(angle - gyro.getAngleZ() < slowDownRange && angle - gyro.getAngleZ() > -slowDownRange * 2){
+    if(angle - gyro.getAngleZ() < slowDownRange && angle - gyro.getAngleZ() > -slowDownRange){
       gain = 0;
     }
-    else if((angle - gyro.getAngleZ() > slowDownRange || angle - gyro.getAngleZ() < -slowDownRange * 2)){
+    else if((angle - gyro.getAngleZ() > slowDownRange || angle - gyro.getAngleZ() < -slowDownRange)){
       gain = (angle - gyro.getAngleZ()) / 44.0;
     }
   }
