@@ -16,10 +16,10 @@ public class AutoSquare extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoSquareExecute(s_Drivetrain),
-      new AutoSquareExecute(s_Drivetrain),
-      new AutoSquareExecute(s_Drivetrain),
-      new AutoSquareExecute(s_Drivetrain)
+      new AutoSquareExecuteOne(s_Drivetrain),
+      new AutoSquareExecuteTwo(s_Drivetrain),
+      new AutoSquareExecuteThree(s_Drivetrain),
+      new AutoSquareExecuteFour(s_Drivetrain)
     );
   }
 }

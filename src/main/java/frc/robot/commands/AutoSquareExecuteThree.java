@@ -12,14 +12,15 @@ import frc.robot.subsystems.Drivetrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoSquareExecute extends SequentialCommandGroup {
+public class AutoSquareExecuteThree extends SequentialCommandGroup {
   /** Creates a new AutoSquareExecute. */
-  public AutoSquareExecute(Drivetrain s_Drivetrain) {
+  public AutoSquareExecuteThree(Drivetrain s_Drivetrain) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ParallelRaceGroup(new WaitCommand(2),
-        new GyroStraightDriveAuto(s_Drivetrain, 0.7)),
+      new ParallelRaceGroup(
+        new WaitCommand(2.4),
+        new GyroStraightDriveAutoOne(s_Drivetrain, 0.7, 180)),
       new Turn(s_Drivetrain),
       new WaitCommand(2)
     );

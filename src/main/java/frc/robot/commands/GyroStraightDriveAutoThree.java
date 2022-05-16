@@ -9,7 +9,7 @@ import frc.robot.sensors.RomiGyro;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class GyroStraightDriveAuto extends CommandBase {
+public class GyroStraightDriveAutoThree extends CommandBase {
   private final Drivetrain s_Drivetrain;
   private final double xAxisSpeed;
   private double angle;
@@ -25,29 +25,36 @@ public class GyroStraightDriveAuto extends CommandBase {
    * @param s_Drivetrain The drivetrain subsystem on which this command will run
    * @param xAxisSpeed Double of forward/backward speed
    */
-  public GyroStraightDriveAuto(Drivetrain s_Drivetrain, double xAxisSpeed) {
+  public GyroStraightDriveAutoThree(Drivetrain s_Drivetrain, double xAxisSpeed) {
     this.s_Drivetrain = s_Drivetrain;
     this.xAxisSpeed = xAxisSpeed;
     addRequirements(s_Drivetrain);
     gyro = Robot.gyro;
+    angle = 270;
+  }
+  public GyroStraightDriveAutoThree(Drivetrain s_Drivetrain, double xAxisSpeed, double angle) {
+    this.s_Drivetrain = s_Drivetrain;
+    this.xAxisSpeed = xAxisSpeed;
+    addRequirements(s_Drivetrain);
+    gyro = Robot.gyro;
+    this.angle = angle;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    angle = gyro.getAngleZ();
     gain = 0;
-    slowDownRange = 0;
+    slowDownRange = 1;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
     if(xAxisSpeed > 0 && gyro.getAngleZ() < angle){
-      gain = (angle - gyro.getAngleZ()) / 13.5;
+      gain = (angle - gyro.getAngleZ()) / 25;
     }
     else if(xAxisSpeed > 0 && gyro.getAngleZ() > angle){
-      gain = (angle - gyro.getAngleZ()) / 13.5;
+      gain = (angle - gyro.getAngleZ()) / 25;
     }
     else if(xAxisSpeed < 0 && gyro.getAngleZ() < angle){
       gain = (angle - gyro.getAngleZ()) / 13.5;

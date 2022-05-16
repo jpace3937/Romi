@@ -12,11 +12,10 @@ import frc.robot.sensors.RomiGyro;
 import frc.robot.subsystems.Drivetrain;
 
 public class Turn extends CommandBase {
-  private double angle;
-  private Drivetrain s_Drivetrain;
+  private final Drivetrain s_Drivetrain;
   private double slowDownRange = 1;
   private double gain;
-  private RomiGyro gyro = Robot.gyro;
+  private final RomiGyro gyro = Robot.gyro;
   private final Timer timer = new Timer();
   /** Creates a new Turn. */
   public Turn(Drivetrain s_Drivetrain) {
@@ -28,8 +27,7 @@ public class Turn extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    angle = gyro.getAngleZ() + 90.0;
-    s_Drivetrain.arcadeDrive(0, 0.5);
+    Robot.angle = gyro.getAngleZ() + 90.0;
     timer.reset();
     timer.start();
   }
@@ -37,12 +35,13 @@ public class Turn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(angle - gyro.getAngleZ() < slowDownRange && angle - gyro.getAngleZ() > -slowDownRange){
+    if(Robot.angle - gyro.getAngleZ() < slowDownRange && Robot.angle - gyro.getAngleZ() > -slowDownRange){
       gain = 0;
     }
-    else if((angle - gyro.getAngleZ() > slowDownRange || angle - gyro.getAngleZ() < -slowDownRange)){
-      gain = (angle - gyro.getAngleZ()) / 44.0;
+    else if((Robot.angle - gyro.getAngleZ() > slowDownRange || Robot.angle - gyro.getAngleZ() < -slowDownRange)){
+      gain = (Robot.angle - gyro.getAngleZ()) / 50.0;
     }
+    s_Drivetrain.arcadeDrive(0, gain);
   }
 
   // Called once the command ends or is interrupted.
@@ -54,7 +53,7 @@ public class Turn extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(timer.get() > 2){
+    if(timer.get() > 3){
       return true;
     }
     else{

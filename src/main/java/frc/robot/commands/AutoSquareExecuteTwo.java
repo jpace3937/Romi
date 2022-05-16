@@ -5,20 +5,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Drivetrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoStraightLine extends ParallelRaceGroup {
-  /** Creates a new AutoStraightLine. */
-  public AutoStraightLine(Drivetrain s_Drivetrain) {
+public class AutoSquareExecuteTwo extends SequentialCommandGroup {
+  /** Creates a new AutoSquareExecute. */
+  public AutoSquareExecuteTwo(Drivetrain s_Drivetrain) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new WaitCommand(3.55),
-      new GyroStraightDriveAutoOne(s_Drivetrain, 0.7)
+      new ParallelRaceGroup(
+        new WaitCommand(2.2),
+        new GyroStraightDriveAutoOne(s_Drivetrain, 0.7, 90)),
+      new Turn(s_Drivetrain),
+      new WaitCommand(2)
     );
   }
 }
