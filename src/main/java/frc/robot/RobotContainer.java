@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ArcadeDriveCutPower;
+import frc.robot.commands.AutoSquare;
 import frc.robot.commands.AutoStraightLine;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
@@ -75,6 +76,7 @@ public class RobotContainer {
     chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(s_Drivetrain));
     chooser.addOption("Auto Routine Time", new AutonomousTime(s_Drivetrain));
     chooser.addOption("Auto Straight Line", new AutoStraightLine(s_Drivetrain));
+    chooser.addOption("Auto Square", new AutoSquare(s_Drivetrain));
     Shuffleboard.getTab("Chooser").add(chooser);
     s_Drivetrain.setDefaultCommand(joystickGyroStraightDrive);
   
