@@ -47,12 +47,14 @@ public class Turn extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    s_Drivetrain.arcadeDrive(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(gyro.getAngleZ() + 1.0 ){
+    if(timer.get() > 2){
       return true;
     }
     else{
